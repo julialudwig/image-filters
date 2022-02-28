@@ -1,0 +1,410 @@
+# This is a Kivy language file that auto-generates the View code
+# Authors: Walker White (wmw2) and Dexter Kozen (dck10)
+# Date:    October 29, 2019
+
+# DIALOG BOXES
+<LoadDialog>:
+    textinput: input
+    filechooser:filechooser
+    orientation: 'vertical'
+    
+    FileChooserIconView:
+        id: filechooser
+        path: '.'
+        filters: ['*.png','*.jpg','*.jpeg','*.gif']
+        on_submit: root.loadchoice(self.path, self.selection[0] if self.selection else '')
+        on_selection: input.text = self.selection[0] if self.selection else ''
+    
+    TextInput:
+        id: input
+        height: 30*sp(1)
+        font_size: 14*sp(1)
+        multiline: False
+        size_hint_y: None
+        
+    BoxLayout:
+        size_hint_y: None
+        height: 30*sp(1)
+        Button:
+            text: 'Cancel'
+            on_release: root.exitchoice()
+        Button:
+            text: 'Load'
+            on_release: root.loadchoice(filechooser.path, input.text)
+
+<SaveDialog>:
+    textinput: input
+    filechooser:filechooser
+    orientation: 'vertical'
+    
+    FileChooserIconView:
+        id: filechooser
+        path: '.'
+        filters: ['*.png','*.jpg','*.jpeg','*.gif']
+        on_selection: input.text = self.selection[0] if self.selection else ''
+
+    TextInput:
+        id: input
+        height: 30*sp(1)
+        font_size: 14*sp(1)
+        multiline: False
+        size_hint_y: None
+
+    BoxLayout:
+        size_hint_y: None
+        height: 30*sp(1)
+        Button:
+            text: 'Cancel'
+            on_release: root.exitchoice()
+        Button:
+            text: 'Save'
+            on_release: root.savechoice(filechooser.path, input.text)
+
+<ErrorDialog>:
+    orientation: 'vertical'
+    color: 0,0,0,.5
+
+    Label:
+        text: root.message
+        color: 1, 1, 1, 1
+        font_size: 14*sp(1)
+        valign: 'middle'
+        size_hint: 1, 0.9
+
+    Button:
+        text: 'OK'
+        size_hint: 1, 0.1
+        on_release: root.okchoice()
+
+<WarningDialog>:
+    orientation: 'vertical'
+    color: 0, 0, 0, 0.5
+
+    Label:
+        text: root.message
+        color: 1, 1, 1, 1
+        font_size: 14*sp(1)
+        valign: 'middle'
+        size_hint: 1, 0.9
+
+    BoxLayout:
+        size_hint_y: None
+        height: 30*sp(1)
+        
+        Button:
+            text: 'Cancel'
+            on_release: root.exitchoice()
+        
+        Button:
+            text: 'OK'
+            on_release: root.okchoice(root.payload)
+        
+
+# DROP-DOWN MENUS
+<ImageDropDown>:
+    undochoice: undo
+    clearchoice: clear
+    
+    Button:
+        id: load
+        text: 'Load'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+    
+    Button:
+        id: save
+        text:  'Save'
+        height: root.rowspan
+        size_hint_y: None
+        on_release: root.select(self.text.lower())
+
+    Button:
+        id: undo
+        text: 'Undo'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+    
+    Button:
+        id: clear
+        text: 'Reset'
+        size_hint_y: None
+        height:  root.rowspan
+        on_release: root.select(self.text.lower())
+
+<TextDropDown>:
+    showchoice: show
+    hidechoice: hide
+    codechoice: code
+    loadchoice: load
+    savechoice: save
+
+	Button:
+        id: show
+        text: 'Show'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+    
+    Button:
+        id: hide
+        text:  'Hide'
+        height: root.rowspan
+        size_hint_y: None
+        on_release: root.select(self.text.lower())
+
+    Button:
+        id: code
+        text: 'Encode'
+        size_hint_y: None
+        height:  root.rowspan
+        on_release: root.select('code')
+
+    Button:
+        id: load
+        text: 'Import'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('load')
+
+    Button:
+        id: save
+        text: 'Export'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('save')
+    
+
+<AxisDropDown>:
+    horichoice: hori
+    vertchoice: vert
+    
+    Button:
+        id: hori
+        text: 'Horizontal'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+    
+    Button:
+        id: vert
+        text: 'Vertical'
+        size_hint_y: None
+        height:  root.rowspan
+        on_release: root.select(self.text.lower())
+
+<GreyDropDown>:
+    greychoice: grey
+    sepiachoice: sepia
+    
+    Button:
+        id: grey
+        text: 'Greyscale'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+    
+    Button:
+        id: sepia
+        text: 'Sepia'
+        size_hint_y: None
+        height:  root.rowspan
+        on_release: root.select(self.text.lower())
+
+<TurnDropDown>:
+    leftchoice: left
+    rghtchoice: rght
+    tranchoice: tran
+    
+    Button:
+        id: left
+        text: 'Left'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+    
+    Button:
+        id: rght
+        text: 'Right'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+
+    Button:
+        id: tran
+        text: 'Transpose'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select(self.text.lower())
+
+<BlockDropDown>:
+    choice10: block10
+    choice20: block20
+    choice50: block50
+    choice100: block100
+    choice200: block200
+    
+    Button:
+        id: block10
+        text: '10 Pixels'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('p10')
+    
+    Button:
+        id: block20
+        text: '20 Pixels'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('p20')
+    
+    Button:
+        id: block50
+        text: '50 Pixels'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('p50')
+    
+    Button:
+        id: block100
+        text: '100 Pixels'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('p100')
+    
+    Button:
+        id: block200
+        text: '200 Pixels'
+        size_hint_y: None
+        height: root.rowspan
+        on_release: root.select('p200')
+
+
+# DATA PANELS
+<ImagePanel>:
+    inside: max(self.size[0]-16*sp(1),0), max(self.size[1]-16*sp(1),0)
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        
+        BorderImage:
+            source: self.getResource('im_border.png')
+            pos: self.x, self.y
+            size: self.width, self.height
+            border: 20, 20, 20, 20
+            display_border: 10*sp(1), 10*sp(1), 10*sp(1), 10*sp(1)
+        
+        Rectangle:
+            size: root.imagesize
+            pos:  root.pos[0]+root.imageoff[0], root.pos[1]+root.imageoff[1]
+            texture: root.texture
+
+<MessagePanel>:
+    inside: max(self.size[0]-16*sp(1),0), max(self.size[1]-16*sp(1),0)
+    hidden: hidden
+    
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        
+        BorderImage:
+            source: self.getResource('im_border.png')
+            pos: self.x, self.y
+            size: self.width, self.height
+            border: 20, 20, 20, 20
+            display_border: 10*sp(1), 10*sp(1), 10*sp(1), 10*sp(1)
+    
+    ScrollView:
+        size: root.inside
+        pos: root.pos[0]+8*sp(1), root.pos[1]+8*sp(1)
+        effect_cls: 'ScrollEffect'
+        
+        TextInput:
+            id: hidden
+            text: ''
+            font_size: 14*sp(1)
+            multiline: True
+            size_hint: 1, None
+            height: self.parent.size[1]
+            background_color: root.textclr
+            on_focus: root.select(True)
+
+
+# PRIMARY INTERFACE
+<InterfacePanel>:
+    orientation: 'vertical'
+    origimage: original
+    workimage: current
+    progress:  progress
+    menubar:   menubar
+    size: 1024*sp(1), 556*sp(1)
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, 0.05
+        
+		BoxLayout:
+			id: menubar
+			orientation: 'horizontal'
+			size_hint: .9, 1
+		
+			Button:
+				text: 'Image...'
+				on_release: root.imagedrop.open(self)
+
+			Button:
+				text: 'Invert'
+				on_release: root.do_async('invert')
+		
+			Button:
+				text: 'Rotate...'
+				on_release: root.turndrop.open(self)
+		
+			Button:
+				text: 'Reflect..'
+				on_release: root.axisdrop.open(self)
+		
+			Button:
+				text: 'Mono...'
+				on_release: root.greydrop.open(self)
+		
+			Button:
+				text: 'Vignette'
+				on_release: root.do_async('vignette')
+		
+			Button:
+				text: 'Jail'
+				on_release: root.do_async('jail')
+		
+			Button:
+				text: 'Pixelate'
+				on_release: root.blockdrop.open(self)
+
+        Label:
+        	id: progress
+            text: 'PROCESSING'
+        	bold: True
+        	color: [0,0,0,1]
+        	size_hint: .1, 1
+        	
+        	canvas.before:
+		        Color:
+        		    rgb: [1, 1, 1, 1] if (root.processing) else [0,0,0,1]
+        		Rectangle:
+        			pos: (self.pos[0],self.pos[1]+sp(2))
+        			size: (self.size[0],self.size[1]-sp(2))
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, 0.95
+        
+		ImagePanel:
+			id: original
+			size: 528*sp(1), 528*sp(1)
+			size_hint: None, None
+        
+        ImagePanel:
+            id: current
+    		size: 528*sp(1), 528*sp(1)
+            size_hint: None, None
